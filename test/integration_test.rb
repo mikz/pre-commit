@@ -87,9 +87,9 @@ describe "integration" do
 
   def make_lib_available_for_hook
     hook_file = PreCommit::Cli::PRE_COMMIT_HOOK_PATH
-    anchor = "-r pre-commit"
+    anchor = '#{cmd}'
     content = read(hook_file)
-    raise unless content.include?(anchor)
+    raise "#{content} does not include #{anchor}" unless content.include?(anchor)
     write(hook_file, content.gsub(anchor, "#{anchor} -I #{Bundler.root.join("lib")}"))
   end
 
